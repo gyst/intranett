@@ -7,6 +7,12 @@ production: bin/buildout
 	[ -d develop-eggs ] && rm -rf develop-eggs || true
 	bin/buildout -c production.cfg -t 1
 
+site:
+	bin/supervisord
+	bin/supervisorctl stop instance
+	bin/instance create_site
+	bin/supervisorctl start instance
+
 clean:
 	@rm -f bin/* .installed.cfg .mr.developer.cfg
 #	@echo "To recompile PIL: remove all PIL* eggs from your eggs cache."
