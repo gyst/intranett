@@ -7,11 +7,17 @@ production: bin/buildout
 	[ -d develop-eggs ] && rm -rf develop-eggs || true
 	bin/buildout -c production.cfg -t 1
 
-site:
-	bin/supervisord
+site: start
 	bin/supervisorctl stop instance
 	bin/instance create_site
 	bin/supervisorctl start instance
+
+start:
+	bin/supervisord
+
+stop:
+	bin/supervisorctl shutdown
+
 
 clean:
 	@rm -f bin/* .installed.cfg .mr.developer.cfg
